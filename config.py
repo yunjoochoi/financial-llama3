@@ -1,4 +1,4 @@
-HUGGING_TOKKEN = "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"
+HUGGING_TOKKEN = "YOURTOKEN"
 BASE_MODEL = "meta-llama/Meta-Llama-3-8B-Instruct"
 DATASET = "content/Data"
 FAST_EMBED_MODEL_NAME = "BAAI/bge-small-en-v1.5"
