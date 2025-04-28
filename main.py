@@ -27,6 +27,13 @@ settting = EmbedSettings().set_and_get_llama_settings()
 print("Setting LLM settings...")
 settting.llm = LLMLoader(system_prompt, query_wrapper_prompt).load_llm()
 
+# 쿼리에서 임베딩 기반 키워드 추출
+from keyword_extractor import KeywordExtractor
+extractor = KeywordExtractor(top_k=3)
+query = "하이닉스의 2025년 영업이익 전망은 어떻게 될까?"
+keywords = extractor.extract(query)
+
+print("추출된 키워드:", keywords)
 print("Setting db Index settings...")
 dbIndex = Db(documents).get_index()
 
@@ -38,6 +45,6 @@ query_engine = dbIndex.as_query_engine(similarity_top_k=10, node_postprocessors=
 
 print("Query Engine Start...")
 now = time.time()
-response = query_engine.query("하이닉스 영업이익 추정치는?")
+response = query_engine.query("2025년도 하이닉스 영업이익 추정치는?")
 print(f"Response Generated: {response}")
 print(f"Elapsed: {round(time.time() - now, 2)}s")

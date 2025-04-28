@@ -1,14 +1,20 @@
 from llama_index.core import VectorStoreIndex, StorageContext
 from llama_index.vector_stores.chroma import ChromaVectorStore
 import chromadb
-
+'''
+data_level0.bin	임베딩 벡터의 실제 float 데이터
+header.bin	벡터 데이터의 메타 정보
+length.bin	각 벡터의 길이 정보
+link_lists.bin	벡터 간 연결 정보 (FAISS-like 구조)
+chroma.sqlite3	컬렉션 정보, 문서 메타데이터, 설정 등이 저장된 SQLite DB
+'''
 class Db:
     def __init__(self, documents):
         # 메모리에 저장하는 ChromaDB 클라이언트 생성
-        chroma_client = chromadb.Client() # 임시 세션용-코드 끝나면 데이터 다 날아감 추후 PersistentClient 등으로 교체
+        chroma_client = chromadb.PersistentClient(path="./chroma_db") # 로컬 벡터 데이터베이스 저장
 
-        # ChromaDB 컬렉션 생성
-        chroma_collection = chroma_client.create_collection(name="test")
+        # 이미 있으면 가져오고, 없으면 새로 만들기
+        chroma_collection = chroma_client.get_or_create_collection(name="test")
 
         # ChromaVectorStore 객체 생성
         self.vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
@@ -17,12 +23,10 @@ class Db:
         self.storage_context = StorageContext.from_defaults(vector_store=self.vector_store)
 
         self.documents = documents
-        
+
+
     def get_index(self):
         # print("doc 확인: ", self.documents)
-
-
-
         return VectorStoreIndex.from_documents( # self.documents에 있는 문서들을 청킹 + 임베딩해서 디비에 저장하고, 그걸 검색 가능한 인덱스로 만듬 //풀 자동화 api
             self.documents,
             storage_context=self.storage_context
