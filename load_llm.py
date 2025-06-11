@@ -7,8 +7,8 @@ class LLMLoader:
     def __init__(self, system_prompt, query_wrapper_prompt):
         self.tokenizer = AutoTokenizer.from_pretrained(
             BASE_MODEL,
-            local_files_only=True,           # ✅ 로컬에서만 불러오게 설정
-            trust_remote_code=True,           # ✅ 일부 모델은 필수
+            local_files_only=True,           # 로컬에서만 불러오게 설정
+            trust_remote_code=True,      
             token=False,
             cache_dir=CUSTOM_PATH
         )
