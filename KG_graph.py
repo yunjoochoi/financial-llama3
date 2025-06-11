@@ -1,4 +1,4 @@
-# ✅ 개선된 KG_graph.py - dict(json) 기반 KG 복원 지원
+# dict 기반 KG 복원 지원
 from llama_index.core.indices.knowledge_graph import KnowledgeGraphIndex
 from llama_index.core.query_engine import RetrieverQueryEngine
 from llama_index.core import Settings
@@ -7,7 +7,6 @@ from llama_index.core.schema import TextNode
 import os
 import json
 
-# 사용자 정의 템플릿
 TRIPLE_EXTRACTION_TEMPLATE = """
 당신은 금융 리포트에서 고품질 지식 그래프를 추출하는 전문가입니다.
 
