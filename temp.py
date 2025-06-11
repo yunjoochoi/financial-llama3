@@ -1,4 +1,4 @@
-# ✅ 개선된 KG 기반 RAG 파이프라인: temp.py
+# 개선 KG 기반 RAG 파이프라인: temp.py
 
 from llama_index.core.postprocessor import SentenceTransformerRerank
 from hugging import HuggingFaceNotebookLogin
